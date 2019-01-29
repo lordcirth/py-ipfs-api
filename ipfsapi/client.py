@@ -188,18 +188,22 @@ class Client(object):
         return self._client.request('/add', decoder='json',
                                     data=body, headers=headers, **kwargs)
 
-    def get(self, multihash, **kwargs):
+    def get(self, multihash, filepath=None, **kwargs):
         """Downloads a file, or directory of files from IPFS.
 
-        Files are placed in the current working directory.
+        Files are placed in the current working directory
+        unless ``filepath`` is set.
 
         Parameters
         ----------
         multihash : str
             The path to the IPFS object(s) to be outputted
+
+        filepath : str
+            The directory in which to save the object.
         """
         args = (multihash,)
-        return self._client.download('/get', args, **kwargs)
+        return self._client.download('/get', args, filepath=filepath, **kwargs)
 
     def cat(self, multihash, offset=0, length=-1, **kwargs):
         r"""Retrieves the contents of a file identified by hash.
